@@ -3,45 +3,79 @@
   <head>
     <%- include('./partials/head') %>
     <title>Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <%- include('./partials/nav') %>
 
     <div class="container mt-4">
-      <h1><%= blog.title %></h1>
-      <img src="<%= blog.coverImageURL %>" width="700px" />
-      <pre class="mt-3"><%= blog.body %></pre>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+          <h1><%= blog.title %></h1>
+          <img src="<%= blog.coverImageURL %>" class="img-fluid" alt="Blog cover image" />
+          <pre class="mt-3"><%= blog.body %></pre>
+        </div>
+      </div>
     </div>
+
+    <hr />
 
     <div class="container mt-4">
-      <img src="<%= blog.createdBy.profileImageURL %>" width="50px" /> <%=
-      blog.createdBy.fullName %>
+      <div class="row">
+        <div class="col-12">
+          <img
+            src="<%= blog.createdBy.profileImageURL %>"
+            width="50px"
+            class="rounded-circle"
+            alt="Author profile image"
+          />
+          <%= blog.createdBy.fullName %>
+        </div>
+      </div>
     </div>
 
-    <div class="container mt-3">
-      <h1>Comments (<%= comments.length %>)</h1>
-      <% if (locals.user) { %>
-      <form action="/blog/comment/<%= blog._id %>" method="post">
-        <div class="mb-3">
-          <input
-            type="text"
-            name="content"
-            class="form-control"
-            placeholder="Enter your comment"
-          />
-          <button class="btn btn-sm btn-primary" type="submit">Add</button>
-        </div>
-      </form>
+    <hr />
 
-      <% } %>
-      <div class="mt-3">
-        <% comments.forEach(comment => { %>
-        <div>
-          <img src="<%= comment.createdBy.profileImageURL %>" width="50px" />
-          <%= comment.createdBy.fullName %>
-          <pre><%= comment.content %></pre>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-12">
+          <h1>Comments (<%= comments.length %>)</h1>
         </div>
-        <% }) %>
+      </div>
+      <% if (locals.user) { %>
+      <div class="row mt-3">
+        <div class="col-12">
+          <form action="/blog/comment/<%= blog._id %>" method="post">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                name="content"
+                class="form-control"
+                placeholder="Enter your comment"
+              />
+              <button class="btn btn-primary" type="submit">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <% } %>
+      <div class="row mt-3">
+        <div class="col-12">
+          <% comments.forEach(comment => { %>
+          <div class="d-flex align-items-center mb-3">
+            <img
+              src="<%= comment.createdBy.profileImageURL %>"
+              width="50px"
+              class="rounded-circle me-2"
+              alt="Commenter profile image"
+            />
+            <div>
+              <strong><%= comment.createdBy.fullName %></strong>
+              <pre class="mb-0"><%= comment.content %></pre>
+            </div>
+          </div>
+          <% }) %>
+        </div>
       </div>
     </div>
 
