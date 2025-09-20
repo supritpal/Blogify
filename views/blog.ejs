@@ -4,6 +4,21 @@
     <%- include('./partials/head') %>
     <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Ensure comment text wraps nicely */
+      .comment-content {
+        white-space: pre-wrap; /* preserves line breaks */
+        word-wrap: break-word; /* breaks long words */
+      }
+
+      /* Reduce image height for small screens */
+      @media (max-width: 576px) {
+        .author-img, .comment-img {
+          width: 40px !important;
+          height: 40px;
+        }
+      }
+    </style>
   </head>
   <body>
     <%- include('./partials/nav') %>
@@ -11,8 +26,8 @@
     <div class="container mt-4">
       <div class="row justify-content-center">
         <div class="col-12 col-md-10">
-          <h1><%= blog.title %></h1>
-          <img src="<%= blog.coverImageURL %>" class="img-fluid" alt="Blog cover image" />
+          <h1 class="mb-3"><%= blog.title %></h1>
+          <img src="<%= blog.coverImageURL %>" class="img-fluid mb-3 rounded" alt="Blog cover image" />
           <pre class="mt-3"><%= blog.body %></pre>
         </div>
       </div>
@@ -21,15 +36,18 @@
     <hr />
 
     <div class="container mt-4">
-      <div class="row">
-        <div class="col-12">
+      <div class="row align-items-center">
+        <div class="col-auto">
           <img
             src="<%= blog.createdBy.profileImageURL %>"
-            width="50px"
-            class="rounded-circle"
+            class="rounded-circle author-img"
+            width="50"
+            height="50"
             alt="Author profile image"
           />
-          <%= blog.createdBy.fullName %>
+        </div>
+        <div class="col">
+          <strong><%= blog.createdBy.fullName %></strong>
         </div>
       </div>
     </div>
@@ -39,9 +57,10 @@
     <div class="container mt-3">
       <div class="row">
         <div class="col-12">
-          <h1>Comments (<%= comments.length %>)</h1>
+          <h4>Comments (<%= comments.length %>)</h4>
         </div>
       </div>
+
       <% if (locals.user) { %>
       <div class="row mt-3">
         <div class="col-12">
@@ -59,19 +78,21 @@
         </div>
       </div>
       <% } %>
+
       <div class="row mt-3">
         <div class="col-12">
           <% comments.forEach(comment => { %>
-          <div class="d-flex align-items-center mb-3">
+          <div class="d-flex align-items-start mb-3">
             <img
               src="<%= comment.createdBy.profileImageURL %>"
-              width="50px"
-              class="rounded-circle me-2"
+              class="rounded-circle comment-img me-2"
+              width="50"
+              height="50"
               alt="Commenter profile image"
             />
             <div>
               <strong><%= comment.createdBy.fullName %></strong>
-              <pre class="mb-0"><%= comment.content %></pre>
+              <p class="comment-content mb-0"><%= comment.content %></p>
             </div>
           </div>
           <% }) %>
