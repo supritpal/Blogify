@@ -32,4 +32,4 @@ A multi-user blog platform built with **Node.js**, **Express**, and **MongoDB**,
 ### 🚀 Live Demo
 
 You can view a live version of the Blogify application here:
-[https://blogapp-8mt7.onrender.com/](https://bloggingapp-bmor.onrender.com/)
+[https://blogapp-8mt7.onrender.com/](https://blog-zlvg.onrender.com/)
